@@ -18,14 +18,26 @@ UNIKEY_AS_API char __url__[]     = "https://github.com/vic4key/Unikey-AS-DLL.git
  * VExt
  */
 
+static CUnikeyASDlg* pUnikeyASDlg = nullptr;
+
 UNIKEY_AS_API void VExt_Load()
 {
-  VExt::API::log(__FUNCSIG__);
+  pUnikeyASDlg = new CUnikeyASDlg();
+  pUnikeyASDlg->Create(CUnikeyASDlg::IDD, nullptr);
+  pUnikeyASDlg->ShowWindow(SW_HIDE);
 }
 
 UNIKEY_AS_API void VExt_Unload()
 {
-  VExt::API::log(__FUNCSIG__);
+  if (pUnikeyASDlg != nullptr)
+  {
+    if (::IsWindow(pUnikeyASDlg->GetSafeHwnd()))
+    {
+      pUnikeyASDlg->SendMessage(WM_CLOSE);
+    }
+
+    delete pUnikeyASDlg;
+  }
 }
 
 /**
@@ -70,8 +82,10 @@ void Window::on_menu_execute(UINT idx, LPARAM lp)
 {
   if (idx == 1)
   {
-    CUnikeyASDlg dlg;
-    dlg.DoModal();
+    if (pUnikeyASDlg != nullptr)
+    {
+      pUnikeyASDlg->ShowWindow(SW_SHOW);
+    }
   }
   else if (idx == 2)
   {

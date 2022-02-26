@@ -93,7 +93,7 @@ int CUnikeyASDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
   if (__super::OnCreate(lpCreateStruct) == -1) return -1;
 
-  if (this->TrayInitialize() != 0) return -1;
+  // if (this->TrayInitialize() != 0) return -1;
 
   if (this->Initialize() != 0)
   {
@@ -536,7 +536,7 @@ void CUnikeyASDlg::OnMenuExit()
   auto response = this->MessageBox(s.c_str(), m_AppTitle.c_str(), MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2);
   if (response == IDNO) return;*/
 
-  this->TrayDestroy();
+  // this->TrayDestroy();
 
   if (m_Timer != 0) this->KillTimer(m_Timer);
 
