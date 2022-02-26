@@ -18,25 +18,24 @@ UNIKEY_AS_API char __url__[]     = "https://github.com/vic4key/Unikey-AS-DLL.git
  * VExt
  */
 
-static CUnikeyASDlg* pUnikeyASDlg = nullptr;
+static CUnikeyASDlg* g_pDialog = nullptr;
 
 UNIKEY_AS_API void VExt_Load()
 {
-  pUnikeyASDlg = new CUnikeyASDlg();
-  pUnikeyASDlg->Create(CUnikeyASDlg::IDD, nullptr);
-  pUnikeyASDlg->ShowWindow(SW_HIDE);
+  if (g_pDialog == nullptr)
+  {
+    g_pDialog = new CUnikeyASDlg();
+    g_pDialog->Create(CUnikeyASDlg::IDD, nullptr);
+  }
+
+  g_pDialog->ShowWindow(SW_HIDE);
 }
 
 UNIKEY_AS_API void VExt_Unload()
 {
-  if (pUnikeyASDlg != nullptr)
+  if (g_pDialog != nullptr)
   {
-    if (::IsWindow(pUnikeyASDlg->GetSafeHwnd()))
-    {
-      pUnikeyASDlg->SendMessage(WM_CLOSE);
-    }
-
-    delete pUnikeyASDlg;
+    delete g_pDialog;
   }
 }
 
@@ -48,7 +47,10 @@ VExt_Expose_Object(Window)
 
 void Window::on_display()
 {
-  VExt::API::msg_box(__FUNCSIG__);
+  if (g_pDialog != nullptr)
+  {
+    g_pDialog->ShowWindow(SW_SHOW);
+  }
 }
 
 void Window::on_setting()
@@ -82,9 +84,9 @@ void Window::on_menu_execute(UINT idx, LPARAM lp)
 {
   if (idx == 1)
   {
-    if (pUnikeyASDlg != nullptr)
+    if (g_pDialog != nullptr)
     {
-      pUnikeyASDlg->ShowWindow(SW_SHOW);
+      g_pDialog->ShowWindow(SW_SHOW);
     }
   }
   else if (idx == 2)
