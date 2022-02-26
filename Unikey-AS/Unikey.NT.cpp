@@ -42,7 +42,7 @@ CUnikeyNT::CUnikeyNT()
   m_FilterList.clear();
 
   m_Sections.insert(std::make_pair(eFilterType::FT_PROCESS_NAME, _T("Process Name")));
-  m_Sections.insert(std::make_pair(eFilterType::FT_WINDOW_NAME, _T("Window Name")));
+  m_Sections.insert(std::make_pair(eFilterType::FT_WINDOW_NAME,  _T("Window Name")));
   m_Sections.insert(std::make_pair(eFilterType::FT_WINDOW_CLASS, _T("Window Class")));
 }
 
@@ -120,6 +120,39 @@ int CUnikeyNT::Initialize()
   m_AddressOfImageBase = (m_AddressOfImageBase == 0 ? 0x140000000 : m_AddressOfImageBase);
   m_OffsetOfModeState  = 0x9B330;
   m_OffsetOfSwitchModeFunction = 0x192C0;
+
+  try
+  {
+    vu::ProcessW process;
+    if (process.attach(m_Handle))
+    {
+      auto modules = process.get_modules();
+      if (!modules.empty())
+      {
+        auto& module_exe = modules.at(0); // the first module is always EXE
+        vu::Buffer data(module_exe.modBaseSize);
+        if (process.read_memory(vu::ulongptr(module_exe.modBaseAddr), data))
+        {
+          // +00 | 48:83EC ??       | sub rsp,28
+          // +04 | 48:8B0D ???????? | mov rcx,qword ptr ds:[rip+????????]
+          // +0B | 33C0             | xor eax,eax
+          // +0D | 3941 04          | cmp dword ptr ds:[rcx+4],eax
+          // +10 | 0F94C0           | sete al
+          // +13 | 8941 04          | mov dword ptr ds:[rcx+4],eax
+          std::string pattern = "48 83 EC ?? 48 8B 0D ?? ?? ?? ?? 33 C0 39 41 04 0F 94 C0 89 41 04";
+          auto result = vu::find_pattern_A(data, pattern);
+          if (result.first)
+          {
+            m_AddressOfImageBase = ULONG_PTR(module_exe.modBaseAddr);
+            auto disp = *(DWORD*)(data.get_ptr_bytes() + result.second + 7);
+            m_OffsetOfModeState = result.second + 0x0B + disp; // the offset of the mode state
+            m_OffsetOfSwitchModeFunction = result.second;      // the offset of the switch mode function
+          }
+        }
+      }
+    }
+  }
+  catch (...) { /* do nothing */ }
 
   m_AddressOfModeState = m_AddressOfImageBase + m_OffsetOfModeState;
   m_AddressOfSwitchModeFunction = m_AddressOfImageBase + m_OffsetOfSwitchModeFunction;
