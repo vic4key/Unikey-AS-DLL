@@ -24,6 +24,12 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Unikey.AS.Dlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unikey.NT.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Unikey-AS.def">
@@ -47,6 +53,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Unikey-AS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Unikey.AS.Dlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Unikey.NT.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

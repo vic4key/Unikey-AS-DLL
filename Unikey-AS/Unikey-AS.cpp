@@ -3,9 +3,10 @@
 
 #include "pch.h"
 #include "framework.h"
+#include "Unikey.AS.Dlg.h"
+#include "Unikey-AS.h"
 
 #include <Vu>
-#include "Unikey-AS.h"
 
 UNIKEY_AS_API char __name__[]    = "Unikey AS";
 UNIKEY_AS_API char __author__[]  = "Vic P.";
@@ -69,7 +70,8 @@ void Window::on_menu_execute(UINT idx, LPARAM lp)
 {
   if (idx == 1)
   {
-    VExt::API::msg_box(__FUNCSIG__);
+    CUnikeyASDlg dlg;
+    dlg.DoModal();
   }
   else if (idx == 2)
   {
