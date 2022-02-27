@@ -8,10 +8,10 @@
   <PropertyGroup>
     <VExtInclude>$(VExt)libVExt\include;$(VExt)libVExt\3rdparty\Pybind11-2.7.1\include;$(VExt)libVExt\3rdparty\Python-3.8.1\include;$(VExt)libVExt\3rdparty\Vutils\include;$(VExt)libVExt\3rdparty\nlohmann-3.9.1\include</VExtInclude>
     <VExtLibrary>$(VExt)libVExt\lib\$(Platform)\$(Configuration);$(VExt)libVExt\3rdparty\Python-3.8.1\lib\$(Platform);$(VExt)libVExt\3rdparty\Vutils\lib\$(PlatformToolset)\$(Platform)</VExtLibrary>
-    <VExtLinking>libVExt.lib;python38$(_DSuffix).lib</VExtLinking>
+    <VExtLinking>python38$(_DSuffix).lib</VExtLinking>
     <VExtQtInclude>$(VExtQt)include</VExtQtInclude>
     <VExtQtLibrary>$(VExtQt)lib</VExtQtLibrary>
-    <VExtQtLinking><!--Qt6Widgets$(DSuffix).lib;Qt6Core$(DSuffix).lib;Qt6Gui$(DSuffix).lib--></VExtQtLinking>
+    <VExtQtLinking></VExtQtLinking>
     <LocalDebuggerEnvironment>PATH=%PATH%;$(VExt)libVExt\3rdparty\Python-3.8.1\bin\$(Platform);$(VExtQt)bin;$(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
   </PropertyGroup>
   <ItemDefinitionGroup>
