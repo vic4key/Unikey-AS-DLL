@@ -11,7 +11,7 @@
     <VExtLinking>libVExt.lib;python38$(_DSuffix).lib</VExtLinking>
     <VExtQtInclude>$(VExtQt)include</VExtQtInclude>
     <VExtQtLibrary>$(VExtQt)lib</VExtQtLibrary>
-    <VExtQtLinking><!-- Qt6Widgets$(DSuffix).lib;Qt6Core$(DSuffix).lib;Qt6Gui$(DSuffix).lib --></VExtQtLinking>
+    <VExtQtLinking><!--Qt6Widgets$(DSuffix).lib;Qt6Core$(DSuffix).lib;Qt6Gui$(DSuffix).lib--></VExtQtLinking>
     <LocalDebuggerEnvironment>PATH=%PATH%;$(VExt)libVExt\3rdparty\Python-3.8.1\bin\$(Platform);$(VExtQt)bin;$(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
   </PropertyGroup>
   <ItemDefinitionGroup>
