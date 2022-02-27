@@ -97,10 +97,10 @@ int CUnikeyASDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
   if (this->Initialize() != 0)
   {
-    ExitProcess(0);
+    return FALSE; // ExitProcess(0);
   }
 
-  return 0;
+  return FALSE;
 }
 
 BOOL CUnikeyASDlg::OnInitDialog()
@@ -286,7 +286,9 @@ int CUnikeyASDlg::Initialize()
 
   if (m_pUnikeyNT->Initialize() != 0)
   {
+    CString error = vu::get_last_error_W().c_str();
     text.LoadString(IDS_INITIALIZE_FAILED);
+    text.Format(L"%s %s", text, error);
     vu::msg_box(this->GetSafeHwnd(), MB_ICONERROR, caption.GetBuffer(), text.GetBuffer());
     return 3;
   }
@@ -322,6 +324,14 @@ void CUnikeyASDlg::Setup()
     this->CenterWindow();
 
     this->GetWindowTextW(m_Status);
+
+    if (m_pUnikeyNT == nullptr || !m_pUnikeyNT->IsReady())
+    {
+      m_StateToggleButtonED = false;
+      this->UpdateToggleButtonED();
+      this->GetDlgItem(IDOK)->EnableWindow(FALSE);
+      this->GetDlgItem(IDC_MODE)->EnableWindow(FALSE);
+    }
   }
   this->UpdateData(FALSE);
 }

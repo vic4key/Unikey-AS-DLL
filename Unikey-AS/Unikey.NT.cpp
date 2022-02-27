@@ -196,7 +196,13 @@ CUnikeyNT::eMode CUnikeyNT::GetModeState() const
 
 const CUnikeyNT::eMode CUnikeyNT::UpdateModeState()
 {
-  vu::rpm_ex(vu::eXBit::x64, m_Handle, LPCVOID(m_AddressOfModeState), &m_ModeState, 1, true, 2, 0, 4);
+  m_ModeState = eMode::MODE_COUNT;
+
+  if (m_Handle != nullptr && m_Handle != INVALID_HANDLE_VALUE)
+  {
+    vu::rpm_ex(vu::eXBit::x64, m_Handle, LPCVOID(m_AddressOfModeState), &m_ModeState, 1, true, 2, 0, 4);
+  }
+
   return m_ModeState;
 }
 
