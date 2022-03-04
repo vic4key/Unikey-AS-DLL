@@ -271,7 +271,8 @@ int CUnikeyASDlg::Initialize()
   if (!vu::is_file_exists(m_CfgPath))
   {
     text.LoadString(IDS_CONFIG_FILE_NOT_FOUND);
-    vu::msg_box(this->GetSafeHwnd(), MB_ICONERROR, caption.GetBuffer(), text.GetBuffer(), m_CfgPath.c_str());
+    VExt::API::log(vu::to_string_A(text.GetBuffer()));
+    // vu::msg_box(this->GetSafeHwnd(), MB_ICONERROR, caption.GetBuffer(), text.GetBuffer(), m_CfgPath.c_str());
     return 1;
   }
 
@@ -280,7 +281,7 @@ int CUnikeyASDlg::Initialize()
   if (m_pUnikeyNT.get() == nullptr)
   {
     text.LoadString(IDS_INITIALIZE_HANDLER_FAILED);
-    vu::msg_box(this->GetSafeHwnd(), MB_ICONERROR, caption.GetBuffer(), text.GetBuffer());
+    VExt::API::log(vu::to_string_A(text.GetBuffer()));
     return 2;
   }
 
@@ -289,14 +290,14 @@ int CUnikeyASDlg::Initialize()
     CString error = vu::get_last_error_W().c_str();
     text.LoadString(IDS_INITIALIZE_FAILED);
     text.Format(L"%s %s", text, error);
-    vu::msg_box(this->GetSafeHwnd(), MB_ICONERROR, caption.GetBuffer(), text.GetBuffer());
+    VExt::API::log(vu::to_string_A(text.GetBuffer()));
     return 3;
   }
 
   if (m_pUnikeyNT->LoadFilterList(m_CfgPath) != 0)
   {
     text.LoadString(IDS_CONFIG_FILE_LOAD_FAILED);
-    vu::msg_box(this->GetSafeHwnd(), MB_ICONERROR, caption.GetBuffer(), text.GetBuffer(), m_CfgPath.c_str());
+    VExt::API::log(vu::to_string_A(text.GetBuffer()));
     return 4;
   }
 

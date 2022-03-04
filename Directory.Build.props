@@ -6,19 +6,20 @@
     <_DSuffix Condition="'$(Configuration)'=='Debug'">_D</_DSuffix>
   </PropertyGroup>
   <PropertyGroup>
-    <VExtInclude>$(VExt)libVExt\include;$(VExt)libVExt\3rdparty\Pybind11-2.7.1\include;$(VExt)libVExt\3rdparty\Python-3.8.1\include;$(VExt)libVExt\3rdparty\Vutils\include;$(VExt)libVExt\3rdparty\nlohmann-3.9.1\include</VExtInclude>
-    <VExtLibrary>$(VExt)libVExt\lib\$(Platform)\$(Configuration);$(VExt)libVExt\3rdparty\Python-3.8.1\lib\$(Platform);$(VExt)libVExt\3rdparty\Vutils\lib\$(PlatformToolset)\$(Platform)</VExtLibrary>
+    <VExtInclude>$(VExt)VExt\include;$(VExt)libVExt\include;$(VExt)libVExt\3rdparty\Pybind11-2.7.1\include;$(VExt)libVExt\3rdparty\Python-3.8.1\include;$(VExt)libVExt\3rdparty\Vutils\include;$(VExt)libVExt\3rdparty\nlohmann-3.9.1\include</VExtInclude>
+    <VExtLibrary>$(VExt)VExt\lib\$(Platform)\$(Configuration);$(VExt)libVExt\lib\$(Platform)\$(Configuration);$(VExt)libVExt\3rdparty\Python-3.8.1\lib\$(Platform);$(VExt)libVExt\3rdparty\Vutils\lib\$(PlatformToolset)\$(Platform)</VExtLibrary>
     <VExtLinking>python38$(_DSuffix).lib</VExtLinking>
     <VExtQtInclude>$(VExtQt)include</VExtQtInclude>
     <VExtQtLibrary>$(VExtQt)lib</VExtQtLibrary>
     <VExtQtLinking></VExtQtLinking>
-    <LocalDebuggerEnvironment>PATH=%PATH%;$(VExt)libVExt\3rdparty\Python-3.8.1\bin\$(Platform);$(VExtQt)bin;$(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
+    <LocalDebuggerEnvironment>PATH=%PATH%;$(VExt)VExt\bin\$(Platform)\$(Configuration);$(VExt)libVExt\3rdparty\Python-3.8.1\bin\$(Platform);$(VExtQt)bin;$(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(VExtInclude);$(VExtQtInclude);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions Condition="'$(ProjectName)'=='libVExt' OR '$(ProjectName)'=='VExt'"><!--VEXT_DLL_EXPORTS;-->%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(VExtLibrary);$(VExtQtLibrary);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
