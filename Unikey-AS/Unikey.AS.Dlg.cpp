@@ -6,6 +6,13 @@
 #include "framework.h"
 #include "Unikey.AS.Dlg.h"
 
+/**
+ * Resolve the linking issue that related to linking `comctl32.dll (version 6)`
+ * Ordinal Not Found
+ * The ordinal 345 could not be located in the dynamic link library
+ */
+#pragma comment(linker,"\"/manifestdependency:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
+
 #define WM_US_TRAY_NOTIFY (WM_USER + 1)
 
 #ifdef _DEBUG
