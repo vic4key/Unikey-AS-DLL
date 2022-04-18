@@ -9,7 +9,7 @@
 #define UNIKEY_AS_API __declspec(dllimport)
 #endif
 
-#include <VExt>
+#include <VExt_DLL>
 
 /**
  * VExt::Window

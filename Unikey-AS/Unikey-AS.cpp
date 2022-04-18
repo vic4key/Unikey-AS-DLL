@@ -55,7 +55,7 @@ void Window::on_display()
 
 void Window::on_setting()
 {
-  VExt::API::msg_box(__FUNCSIG__);
+  VExt::API::message_box(__FUNCSIG__);
 }
 
 std::string Window::on_menu_define()
@@ -92,6 +92,6 @@ void Window::on_menu_execute(UINT idx, LPARAM lp)
   else if (idx == 2)
   {
     auto s = vu::format_A("%s %s © %s\n\nWritten in C++ on %s", __name__, __version__, __author__, __DATE__);
-    VExt::API::msg_box(s);
+    VExt::API::message_box(s);
   }
 }

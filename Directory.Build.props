@@ -19,7 +19,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(VExtInclude);$(VExtQtInclude);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions Condition="'$(ProjectName)'=='libVExt' OR '$(ProjectName)'=='VExt'"><!--VEXT_DLL_EXPORTS;-->%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(ProjectName)'=='libVExt' OR '$(ProjectName)'=='VExt'">VEXT_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(VExtLibrary);$(VExtQtLibrary);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
