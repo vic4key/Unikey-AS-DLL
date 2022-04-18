@@ -67,4 +67,15 @@
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\Unikey.AS.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\VN.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\EN.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

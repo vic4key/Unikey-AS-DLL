@@ -233,6 +233,11 @@
   <ItemGroup>
     <ResourceCompile Include="Unikey-AS.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\EN.bmp" />
+    <Image Include="res\Unikey.AS.ico" />
+    <Image Include="res\VN.bmp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
