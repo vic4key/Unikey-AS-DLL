@@ -1,10 +1,9 @@
 #pragma once
-#include <Windows.h>
-
-#include <map>
-#include <string>
 
 #include <vu>
+#include <map>
+#include <string>
+#include <windows.h>
 
 class CUnikeyNT
 {
@@ -53,6 +52,5 @@ private:
   TFilterLists m_FilterList;
 
   TFilterData ParseFilter(const std::vector<std::tstring>& filter);
-
   TWndInfo GetInfoByWindowHandle(const HWND windowHandle);
 };

@@ -1,8 +1,6 @@
-
 // Unikey.AS.Dlg.cpp : implementation file
 //
 
-#include "pch.h"
 #include "framework.h"
 #include "Unikey.AS.Dlg.h"
 

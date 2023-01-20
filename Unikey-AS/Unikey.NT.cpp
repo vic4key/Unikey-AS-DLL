@@ -1,6 +1,4 @@
-#include "pch.h"
 #include "framework.h"
-
 #include "Unikey.NT.h"
 
 #include <psapi.h>
