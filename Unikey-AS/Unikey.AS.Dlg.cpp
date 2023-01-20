@@ -77,7 +77,7 @@ CUnikeyASDlg::CUnikeyASDlg(CWnd* pParent /*=NULL*/)
   , m_StateToggleButtonED(true)
   , m_EVmode(_T("EVX"))
   , m_pUnikeyNT(nullptr)
-  , m_ModeState(CUnikeyNT::eMode::MODE_COUNT)
+  , m_ModeState(CUnikeyNT::eMode::MODE_NA)
 {
   AfxInitRichEdit2();
   m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
@@ -400,7 +400,7 @@ void CUnikeyASDlg::OnTimer(UINT_PTR nIDEvent)
   if (m_ForceMode) m_pUnikeyNT->SwitchMode(mode);
   else if (changedToOther) m_pUnikeyNT->SwitchMode(mode);
 
-  mode = m_pUnikeyNT->UpdateModeState();
+  mode = m_pUnikeyNT->GetModeState();
   if (mode != m_ModeState)
   {
     m_ModeState = mode;
@@ -430,11 +430,11 @@ void CUnikeyASDlg::OnBnClickedMode()
   this->UpdateSwitchModeButton();
 }
 
-void CUnikeyASDlg::UpdateSwitchModeButton(bool force)
+void CUnikeyASDlg::UpdateSwitchModeButton()
 {
   if (m_pUnikeyNT == nullptr || !m_pUnikeyNT->IsReady()) return;
 
-  m_ModeState = force ? m_pUnikeyNT->UpdateModeState() : m_pUnikeyNT->GetModeState();
+  m_ModeState = m_pUnikeyNT->GetModeState();
 
   m_SwitchMode.SetBitmap(m_ModeState == CUnikeyNT::eMode::MODE_EN ? m_EN : m_VN);
 }

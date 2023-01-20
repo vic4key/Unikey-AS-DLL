@@ -85,7 +85,7 @@ private:
   int  Initialize();
   void Setup();
   void SetWindowOnTopMost(bool flag = true);
-  void UpdateSwitchModeButton(bool force = false);
+  void UpdateSwitchModeButton();
 
   void UpdateToggleButtonED();
 
