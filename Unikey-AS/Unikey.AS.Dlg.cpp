@@ -13,8 +13,6 @@
  */
 #pragma comment(linker,"\"/manifestdependency:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
-#define WM_US_TRAY_NOTIFY (WM_USER + 1)
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -61,7 +59,6 @@ BEGIN_MESSAGE_MAP(CUnikeyASDlg, CDialogEx)
   ON_BN_CLICKED(IDC_TOP_MOST, &CUnikeyASDlg::OnBnClickedTopMost)
   ON_BN_CLICKED(IDC_MODE, &CUnikeyASDlg::OnBnClickedMode)
   ON_WM_DESTROY()
-  ON_MESSAGE(WM_US_TRAY_NOTIFY, &CUnikeyASDlg::OnTrayNotify)
   ON_COMMAND(ID_MENU_SHOW, &CUnikeyASDlg::OnMenuShowMain)
   ON_COMMAND(ID_MENU_ABOUT, &CUnikeyASDlg::OnMenuAbout)
   ON_COMMAND(ID_MENU_EXIT, &CUnikeyASDlg::OnMenuExit)
@@ -99,8 +96,6 @@ void CUnikeyASDlg::DoDataExchange(CDataExchange* pDX)
 int CUnikeyASDlg::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
   if (__super::OnCreate(lpCreateStruct) == -1) return -1;
-
-  // if (this->TrayInitialize() != 0) return -1;
 
   if (this->Initialize() != 0)
   {
@@ -450,94 +445,6 @@ void CUnikeyASDlg::OnClose()
   this->ShowWindow(SW_HIDE);
 }
 
-int CUnikeyASDlg::TrayInitialize() 
-{
-  m_Tray.cbSize = sizeof(NOTIFYICONDATA);
-  //Size of this structure, in bytes. 
-
-  m_Tray.hWnd = this->m_hWnd;
-  //Handle to the window that receives notification 
-  //messages associated with an icon in the taskbar 
-  //status area. The Shell uses hWnd and uID to 
-  //identify which icon to operate on when Shell_NotifyIcon is invoked. 
-
-  m_Tray.uID = 1;
-  //Application-defined identifier of the taskbar icon.
-  //The Shell uses hWnd and uID to identify which icon 
-  //to operate on when Shell_NotifyIcon is invoked. You
-  // can have multiple icons associated with a single 
-  //hWnd by assigning each a different uID. 
-
-  m_Tray.uCallbackMessage = WM_US_TRAY_NOTIFY;
-  //Application-defined message identifier. The system 
-  //uses this identifier to send notifications to the 
-  //window identified in hWnd. These notifications are 
-  //sent when a mouse event occurs in the bounding 
-  //rectangle of the icon, or when the icon is selected 
-  //or activated with the keyboard. The wParam parameter 
-  //of the message contains the identifier of the taskbar 
-  //icon in which the event occurred. The lParam parameter 
-  //holds the mouse or keyboard message associated with the
-  // event. For example, when the pointer moves over a 
-  //taskbar icon, lParam is set to WM_MOUSEMOVE. 
-
-  m_Tray.hIcon = this->m_hIcon;
-  //Handle to the icon to be added, modified, or deleted
-
-  TCHAR trayName[] = _T("System Tray");
-  lstrcpyn(m_Tray.szTip, trayName, lstrlen(trayName));
-  //Pointer to a null-terminated string with the text 
-  //for a standard ToolTip. It can have a maximum of 64 
-  //characters including the terminating NULL. 
-
-  m_Tray.uFlags = NIF_ICON | NIF_MESSAGE;
-  //Flags that indicate which of the other members contain 
-  //valid data.
-
-  BOOL success = m_TrayMenu.LoadMenu(IDR_TRAY_MENU);
-  if(!success) return 1;
-
-  success = Shell_NotifyIcon(NIM_ADD, &m_Tray);
-  if(!success) return 2;
-
-  this->ShowWindow(SW_HIDE);
-
-  return 0;
-}
-
-void CUnikeyASDlg::TrayDestroy()
-{
-  Shell_NotifyIcon(NIM_DELETE, &m_Tray);
-}
-
-LRESULT CUnikeyASDlg::OnTrayNotify(WPARAM wParam, LPARAM lParam)
-{
-  switch (LOWORD(lParam)) 
-  { 
-  case WM_LBUTTONDBLCLK:
-    {
-      this->ShowWindow(SW_SHOW);
-      break;
-    }
-  case WM_RBUTTONUP:
-  case WM_RBUTTONDOWN:
-    {
-      CPoint point;
-      GetCursorPos(&point);
-      m_TrayMenu.GetSubMenu(0)->TrackPopupMenu(
-        TPM_BOTTOMALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON,
-        point.x,
-        point.y,
-        this
-      );
-    }
-  default:
-    break;
-  }
-
-  return TRUE;
-}
-
 void CUnikeyASDlg::OnMenuShowMain()
 {
   this->ShowWindow(SW_SHOW);
@@ -553,8 +460,6 @@ void CUnikeyASDlg::OnMenuExit()
   /*auto s = vu::LoadResourceString(IDS_ASK_QUIT);
   auto response = this->MessageBox(s.c_str(), m_AppTitle.c_str(), MB_ICONQUESTION | MB_YESNO | MB_DEFBUTTON2);
   if (response == IDNO) return;*/
-
-  // this->TrayDestroy();
 
   if (m_Timer != 0) this->KillTimer(m_Timer);
 

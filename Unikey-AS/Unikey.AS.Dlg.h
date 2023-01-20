@@ -59,8 +59,6 @@ public:
   afx_msg void OnMenuAbout();
   afx_msg void OnMenuExit();
 
-  afx_msg LRESULT OnTrayNotify(WPARAM wParam, LPARAM lParam);
-
 private:
   CUnikeyNT::eMode m_ModeState;
   CString m_EVmode;
@@ -68,9 +66,6 @@ private:
   CWnd* m_pActiveWindow;
 
   bool m_StateToggleButtonED;
-
-  CMenu m_TrayMenu;
-  NOTIFYICONDATA m_Tray;
 
   std::unique_ptr<CUnikeyNT> m_pUnikeyNT;
 
@@ -86,11 +81,7 @@ private:
   void Setup();
   void SetWindowOnTopMost(bool flag = true);
   void UpdateSwitchModeButton();
-
   void UpdateToggleButtonED();
-
-  int  TrayInitialize();
-  void TrayDestroy();
   void CenterWindow();
 
   int MessageBox(
